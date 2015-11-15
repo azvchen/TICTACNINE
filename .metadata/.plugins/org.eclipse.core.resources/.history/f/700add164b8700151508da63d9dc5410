@@ -26,8 +26,6 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 	Icon ic1 = new ImageIcon("ic1.jpg");
 	Icon ic2 = new ImageIcon("ic2.jpg");
-	
-	Manager manager;
 
 	public static void main(String[] args) {
 		new GuiTicTac();
@@ -89,8 +87,6 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		frame.setSize(400, 500);// 400 width and 500 height
 		frame.setLayout(null);// using no layout managers
 		frame.setVisible(true);// making the frame visible
-		
-		manager = new Manager();
 	}
 
 	@Override
