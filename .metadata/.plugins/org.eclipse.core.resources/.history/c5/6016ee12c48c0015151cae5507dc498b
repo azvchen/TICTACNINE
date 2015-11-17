@@ -13,6 +13,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 	// boolean[] circle = {true,true,true,true,true,true,true,true,true};
 	boolean circle;
 	JButton[] buttonArr = new JButton[9];
+	Square[][] grid = new Square[9][9];
 //
 //	JButton a;
 //	JButton b;

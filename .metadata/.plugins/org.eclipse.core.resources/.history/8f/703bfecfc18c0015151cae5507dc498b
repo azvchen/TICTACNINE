@@ -26,7 +26,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 	JButton restart;
 
 	Icon iconX = new ImageIcon("ic1.jpg");
-	Icon iconO = new ImageIcon("ic2.jpg");
+	Icon ic2 = new ImageIcon("ic2.jpg");
 	
 	Manager manager;
 
@@ -77,7 +77,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 				but.setIcon(iconX);
 				circle = false;
 			} else {
-				but.setIcon(iconO);
+				but.setIcon(ic2);
 				circle = true;
 			}
 		}

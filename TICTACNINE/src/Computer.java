@@ -1,0 +1,22 @@
+import java.util.HashSet;
+import java.util.Set;
+
+public class Computer {
+	
+	public int play(int[] board) {
+		Set<Integer> freeSquares = getFreeSquares(board);
+		return randomPlay(freeSquares);
+	}
+	
+	public Set<Integer> getFreeSquares(int[] board) {
+		Set<Integer> freeSquares = new HashSet<Integer>();
+		for (int i = 0; i < 9; i++)
+			if (board[i] != 0)
+				freeSquares.add(i);
+		return freeSquares;
+	}
+	
+	public int randomPlay(Set<Integer> freeSquares) {
+		return freeSquares.iterator().next();
+	}
+}
