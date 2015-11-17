@@ -41,6 +41,13 @@ public class Board {
 			return false;
 	}
 	
+	public boolean full() {
+		for (int p : board)
+			if (p == 0)
+				return false;
+		return true;
+	}
+	
 	/**
 	 * 
 	 * @param player

@@ -40,6 +40,10 @@ public class Manager {
 					}
 				} else {	// if no one has won yet
 					toggleActivePlayer();	// switch players, only when a sub board square has been claimed and the sub board has not been won
+					if (board.full()) {	// the sub board is tied (victory was already checked)
+						mainBoard.claimSquare(activeBoard, activePlayer);	// the player who did not just play gets the main board square
+						activeBoard = -1;
+					}
 				}
 				return true;	// the click claimed a square, return true
 			} else {

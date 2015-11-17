@@ -12,12 +12,14 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 	boolean circle;
 	JButton[][] buttonArrArr = new JButton[9][9];
-	Boolean[][] emptyArrArr = new Boolean[9][9];
+	boolean[][] emptyArrArr = new boolean[9][9];
 
 	JButton restart;
 
-	Icon ic1 = new ImageIcon("ic1.jpg");
-	Icon ic2 = new ImageIcon("ic2.jpg");
+	Icon iconX = new ImageIcon("ic1.jpg");
+	Icon iconO = new ImageIcon("ic2.jpg");
+	
+	Manager manager;
 
 	public static void main(String[] args) {
 		new GuiTicTac();
@@ -56,7 +58,8 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		frame.setSize(530, 540);// 400 width and 500 height
 		frame.setLayout(null);// using no layout managers
 		frame.setVisible(true);// making the frame visible
-
+		
+		manager = new Manager();
 	}
 
 	@Override
@@ -65,14 +68,21 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		JButton but = (JButton) e.getSource();
 		int i = Integer.parseInt(but.getText())%9;
 		int j = Integer.parseInt(but.getText())/9;
+		
+		boolean clicked = false;
+		int player = manager.activePlayer();
+		if (manager.activeBoard() == -1) {
+			if (manager.click(j))
+				clicked = manager.click(i);
+		} else {
+			clicked = manager.activeBoard() == j && manager.click(i);
+		}
 
-		if (emptyArrArr[i][j]) {
-			if (circle) {
-				but.setIcon(ic1);
-				circle = false;
+		if (clicked) {
+			if (player == 1) {
+				but.setIcon(iconX);
 			} else {
-				but.setIcon(ic2);
-				circle = true;
+				but.setIcon(iconO);
 			}
 		}
 		emptyArrArr[i][j] = false;
