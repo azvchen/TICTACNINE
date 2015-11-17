@@ -155,16 +155,16 @@ public class GuiTicTac implements ItemListener, ActionListener {
 			}
 		}
 		
-		if (hasComputer && manager.activePlayer() == 2) { 
-			int s = Computer.play(manager.getCopyOfActiveBoard());
-			if (manager.activeBoard() != -1)
-				click(buttonArrArr[manager.activeBoard()][s]);
-			else {
-				manager.click(s);
-				s = Computer.play(manager.getCopyOfActiveBoard());
-				click(buttonArrArr[manager.activeBoard()][s]);
-			}
-		}
+//		if (hasComputer && player == 2) { 
+//			i = Computer.play(manager.getCopyOfActiveBoard());
+//			if (manager.activeBoard() != -1)
+//				click(buttonArrArr[i][j]);
+//			else {
+//				manager.click(i); j = i;
+//				i = Computer.play(manager.getCopyOfActiveBoard());
+//				click(buttonArrArr[i][j]);
+//			}
+//		}
 		 
 	}
 
