@@ -9,20 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class GuiTicTac implements ItemListener, ActionListener {
-	boolean[] empty = { true, true, true, true, true, true, true, true, true };
-	// boolean[] circle = {true,true,true,true,true,true,true,true,true};
+
 	boolean circle;
-	JButton[] buttonArr = new JButton[9];
-//
-//	JButton a;
-//	JButton b;
-//	JButton c;
-//	JButton d;
-//	JButton e;
-//	JButton f;
-//	JButton g;
-//	JButton h;
-//	JButton i;
+	JButton[][] buttonArrArr = new JButton[9][9];
+	Boolean[][] emptyArrArr = new Boolean[9][9];
+
 	JButton restart;
 
 	Icon ic1 = new ImageIcon("ic1.jpg");
@@ -42,33 +33,40 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 		JFrame frame = new JFrame();// creating instance of JFrame
 		// JCheckBox a = new JCheckBox();//creating instance of JButton
-		for (int i=0;i<9; i++) {
-			String s = Integer.toString(i);
-			buttonArr[i]=new JButton(s);
-			int a = 30+(i%3)*100;
-			int b = 100+(i/3)*100;
-			buttonArr[i].setBounds(a, b, 100, 100);
-			buttonArr[i].addActionListener(this);
-			frame.add(buttonArr[i]);
+		for (int j = 0; j < 9; j++) {
+			int c = 10 + (j % 3) * 160;
+			int d = 10 + (j / 3) * 160;
+			for (int i = 0; i < 9; i++) {
+				String s = Integer.toString(i + 9 * j);
+				buttonArrArr[j][i] = new JButton(s);
+				int a = c + (i % 3) * 50;
+				int b = d + (i / 3) * 50;
+				buttonArrArr[j][i].setBounds(a, b, 50, 50);
+				buttonArrArr[j][i].addActionListener(this);
+				frame.add(buttonArrArr[j][i]);
+				emptyArrArr[j][i] = true;
+			}
 		}
-		
-		restart = new JButton("Restart");// creating instance of JButton
-		restart.setBounds(230, 400, 100, 30);// x axis, y axis, width, height
-		restart.addActionListener(this);
-		frame.add(restart);// adding button in JFrame
 
-		frame.setSize(400, 500);// 400 width and 500 height
+		// restart = new JButton("Restart");// creating instance of JButton
+		// restart.setBounds(230, 400, 100, 30);// x axis, y axis, width, height
+		// restart.addActionListener(this);
+		// frame.add(restart);// adding button in JFrame
+
+		frame.setSize(530, 540);// 400 width and 500 height
 		frame.setLayout(null);// using no layout managers
 		frame.setVisible(true);// making the frame visible
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		JButton but = (JButton) e.getSource();
-		int i = Integer.parseInt(but.getText());
+		int i = Integer.parseInt(but.getText())%9;
+		int j = Integer.parseInt(but.getText())/9;
 
-		if (empty[i]) {
+		if (emptyArrArr[i][j]) {
 			if (circle) {
 				but.setIcon(ic1);
 				circle = false;
@@ -77,7 +75,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 				circle = true;
 			}
 		}
-		empty[i] = false;
+		emptyArrArr[i][j] = false;
 
 	}
 
