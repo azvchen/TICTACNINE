@@ -21,7 +21,6 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 	Icon iconX = new ImageIcon("ic1.jpg");
 	Icon iconO = new ImageIcon("ic2.jpg");
-	Icon iconDef = new ImageIcon("ic3.jpg");
 	
 	Manager manager;
 
@@ -115,11 +114,11 @@ public class GuiTicTac implements ItemListener, ActionListener {
 				but.setIcon(iconO);
 			}
 		}
-		/*
+		
 		if (hasComputer) {
 			i = Computer.play(manager.getCopyOfActiveBoard());
 			click(buttonArrArr[i][j]);
-		}*/
+		}
 	}
 
 	@Override

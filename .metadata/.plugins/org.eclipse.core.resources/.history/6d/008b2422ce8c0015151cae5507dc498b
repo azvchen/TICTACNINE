@@ -12,6 +12,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 	boolean circle;
 	JButton[][] buttonArrArr = new JButton[9][9];
+	boolean[][] emptyArrArr = new boolean[9][9];
 
 	JButton restart;
 	JButton computer;
@@ -21,7 +22,6 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 	Icon iconX = new ImageIcon("ic1.jpg");
 	Icon iconO = new ImageIcon("ic2.jpg");
-	Icon iconDef = new ImageIcon("ic3.jpg");
 	
 	Manager manager;
 
@@ -50,6 +50,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 				buttonArrArr[j][i].setBounds(a, b, 50, 50);
 				buttonArrArr[j][i].addActionListener(this);
 				frame.add(buttonArrArr[j][i]);
+				emptyArrArr[j][i] = true;
 			}
 		}
 
@@ -76,10 +77,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		JButton but = (JButton) e.getSource();
-		click(but);
-	}
-	
-	public void click(JButton but) {
+		
 		if (but == restart) {
 			initialize();
 			return;
@@ -115,11 +113,8 @@ public class GuiTicTac implements ItemListener, ActionListener {
 				but.setIcon(iconO);
 			}
 		}
-		/*
-		if (hasComputer) {
-			i = Computer.play(manager.getCopyOfActiveBoard());
-			click(buttonArrArr[i][j]);
-		}*/
+		emptyArrArr[i][j] = false;
+
 	}
 
 	@Override

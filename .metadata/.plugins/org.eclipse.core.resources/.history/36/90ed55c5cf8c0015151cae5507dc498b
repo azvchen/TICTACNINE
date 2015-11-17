@@ -115,11 +115,11 @@ public class GuiTicTac implements ItemListener, ActionListener {
 				but.setIcon(iconO);
 			}
 		}
-		/*
+		
 		if (hasComputer) {
 			i = Computer.play(manager.getCopyOfActiveBoard());
 			click(buttonArrArr[i][j]);
-		}*/
+		}
 	}
 
 	@Override

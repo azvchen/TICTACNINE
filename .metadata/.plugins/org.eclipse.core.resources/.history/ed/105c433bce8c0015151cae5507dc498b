@@ -3,12 +3,12 @@ import java.util.Set;
 
 public class Computer {
 	
-	public static int play(int[] board) {
+	public int play(int[] board) {
 		Set<Integer> freeSquares = getFreeSquares(board);
 		return randomPlay(freeSquares);
 	}
 	
-	public static Set<Integer> getFreeSquares(int[] board) {
+	public Set<Integer> getFreeSquares(int[] board) {
 		Set<Integer> freeSquares = new HashSet<Integer>();
 		for (int i = 0; i < 9; i++)
 			if (board[i] != 0)
@@ -16,7 +16,7 @@ public class Computer {
 		return freeSquares;
 	}
 	
-	public static int randomPlay(Set<Integer> freeSquares) {
+	public int randomPlay(Set<Integer> freeSquares) {
 		return freeSquares.iterator().next();
 	}
 }
