@@ -64,7 +64,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 		activeGame = false;
 		hasComputer = false;
-		
+
 		label = new JLabel("New Game");
 		// Set the position of the text, relative to the icon:
 		label.setBounds(30, 485, 250, 30);
@@ -124,17 +124,15 @@ public class GuiTicTac implements ItemListener, ActionListener {
 			}
 			if (manager.activeBoard() == -1) {
 				Icon icon = player == 1 ? iconX : iconO;
-				for (int j2 = 0; j2 < 9; j2++) {
-					buttonArrArr[j][j2].setIcon(icon);
+				for (int p = 0; p < 9; p++) {
+					buttonArrArr[j][p].setIcon(icon);
+					label.setText(manager.showPlayerName(player)
+							+ " just conquered " + j + "th subboard");
 				}
 				if (manager.winner() != 0) {
-					String res;
-					if (manager.winner() == 1 ){
-						res = "Android won!";
-					}else {
-						res = "Apple won!";
-					}
-					label.setText("Game Over"+ "  "+res);
+					label.setText("Game Over" + "  "
+							+ manager.showPlayerName(manager.winner())
+							+ " wins");
 				}
 			}
 		}
