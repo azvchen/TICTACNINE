@@ -19,11 +19,8 @@ public class GuiTicTac implements ItemListener, ActionListener {
 	boolean hasComputer;
 	boolean activeGame;
 
-	Icon iconX = new ImageIcon("Xsmall.jpg");
-	Icon iconO = new ImageIcon("Osmall.jpg");
-	Icon iconXL = new ImageIcon("Xlarge.jpg");
-	Icon iconOL = new ImageIcon("Olarge.jpg");
-	Icon iconDef = new ImageIcon("White.jpg");
+	Icon iconX = new ImageIcon("ic1.jpg");
+	Icon iconO = new ImageIcon("ic2.jpg");
 	
 	Manager manager;
 
@@ -46,7 +43,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 			int d = 10 + (j / 3) * 160;
 			for (int i = 0; i < 9; i++) {
 				String s = Integer.toString(i + 9 * j);
-				buttonArrArr[j][i] = new JButton(s, iconDef);
+				buttonArrArr[j][i] = new JButton(s);
 				int a = c + (i % 3) * 50;
 				int b = d + (i / 3) * 50;
 				buttonArrArr[j][i].setBounds(a, b, 50, 50);
@@ -62,10 +59,10 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		
 		activeGame = false;
 		hasComputer = false;
-		/*computer = new JButton("Computer");// creating instance of JButton
+		computer = new JButton("Computer");// creating instance of JButton
 		computer.setBounds(270, 485, 100, 30);// x axis, y axis, width, height
 		computer.addActionListener(this);
-		frame.add(computer);// adding button in JFrame*/
+		frame.add(computer);// adding button in JFrame
 
 		frame.setSize(530, 540);// 400 width and 500 height
 		frame.setLayout(null);// using no layout managers
@@ -85,7 +82,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		if (but == restart) {
 			initialize();
 			return;
-		} /*else if (but == computer) {
+		} else if (but == computer) {
 			if (!activeGame) {
 				hasComputer = !hasComputer;
 				if (hasComputer)
@@ -94,7 +91,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 					computer.setText("Computer");
 			}
 			return;
-		}*/
+		}
 		
 		activeGame = true;
 		
@@ -116,29 +113,11 @@ public class GuiTicTac implements ItemListener, ActionListener {
 			} else {
 				but.setIcon(iconO);
 			}
-			if (manager.activeBoard() == -1) {
-				Icon icon = player == 1 ? iconX : iconO;
-				for (int j2 = 0; j2 < 9; j2++) {
-					buttonArrArr[j][j2].setIcon(icon);
-				}
-				if (manager.winner() != 0) {
-					restart.setText("P" + manager.winner() + " won!");
-				}
-			}
 		}
-		/*
-		if (hasComputer && player == 2) {
-			i = Computer.play(manager.getCopyOfActiveBoard());
-			if (manager.activeBoard() != -1)
-				click(buttonArrArr[i][j]);
-			else {
-				manager.click(i);
-				j = i;
-				i = Computer.play(manager.getCopyOfActiveBoard());
-				click(buttonArrArr[i][j]);
-			}
+		
+		if (hasComputer) {
+			Computer.play(manager.getCopyOfActiveBoard());
 		}
-		*/
 	}
 
 	@Override

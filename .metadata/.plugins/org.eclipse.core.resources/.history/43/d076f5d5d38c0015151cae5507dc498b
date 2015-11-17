@@ -121,9 +121,6 @@ public class GuiTicTac implements ItemListener, ActionListener {
 				for (int j2 = 0; j2 < 9; j2++) {
 					buttonArrArr[j][j2].setIcon(icon);
 				}
-				if (manager.winner() != 0) {
-					restart.setText("P" + manager.winner() + " won!");
-				}
 			}
 		}
 		/*
