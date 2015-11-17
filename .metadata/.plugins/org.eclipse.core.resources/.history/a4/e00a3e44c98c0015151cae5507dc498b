@@ -69,22 +69,24 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		int i = Integer.parseInt(but.getText())%9;
 		int j = Integer.parseInt(but.getText())/9;
 		
-		boolean clicked = false;
-		int player = manager.activePlayer();
-		if (manager.activeBoard() == -1) {
-			if (manager.click(j))
-				clicked = manager.click(i);
-		} else {
-			clicked = manager.activeBoard() == j && manager.click(i);
-		}
+}
 
-		if (clicked) {
-			if (player == 1) {
+		if (emptyArrArr[i][j]) {
+			if (circle) {
 				but.setIcon(iconX);
+				circle = false;
 			} else {
 				but.setIcon(iconO);
+				circle = true;
 			}
 		}
+		
+		if (manager.activeBoard() == -1) {
+			if (manager.click(j))
+				manager.click(i);
+		} else {
+			manager.click(i);
+		
 		emptyArrArr[i][j] = false;
 
 	}

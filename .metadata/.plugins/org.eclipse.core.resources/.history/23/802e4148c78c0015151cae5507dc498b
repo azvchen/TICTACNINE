@@ -12,7 +12,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 	boolean circle;
 	JButton[][] buttonArrArr = new JButton[9][9];
-	boolean[][] emptyArrArr = new boolean[9][9];
+	Boolean[][] emptyArrArr = new Boolean[9][9];
 
 	JButton restart;
 
@@ -69,20 +69,16 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		int i = Integer.parseInt(but.getText())%9;
 		int j = Integer.parseInt(but.getText())/9;
 		
-		boolean clicked = false;
-		int player = manager.activePlayer();
-		if (manager.activeBoard() == -1) {
-			if (manager.click(j))
-				clicked = manager.click(i);
-		} else {
-			clicked = manager.activeBoard() == j && manager.click(i);
-		}
+		if (i = 1)
+			return;
 
-		if (clicked) {
-			if (player == 1) {
+		if (emptyArrArr[i][j]) {
+			if (circle) {
 				but.setIcon(iconX);
+				circle = false;
 			} else {
 				but.setIcon(iconO);
+				circle = true;
 			}
 		}
 		emptyArrArr[i][j] = false;
