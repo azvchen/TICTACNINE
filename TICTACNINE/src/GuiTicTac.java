@@ -7,6 +7,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class GuiTicTac implements ItemListener, ActionListener {
 
@@ -15,7 +16,8 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 	JButton restart;
 	JButton computer;
-	
+	JLabel label;
+
 	boolean hasComputer;
 	boolean activeGame;
 
@@ -24,7 +26,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 	Icon iconXL = new ImageIcon("Xlarge.jpg");
 	Icon iconOL = new ImageIcon("Olarge.jpg");
 	Icon iconDef = new ImageIcon("White.jpg");
-	
+	// x = Andorid, o = Apple
 	Manager manager;
 
 	public static void main(String[] args) {
@@ -59,18 +61,27 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		restart.setBounds(380, 485, 100, 30);// x axis, y axis, width, height
 		restart.addActionListener(this);
 		frame.add(restart);// adding button in JFrame
-		
+
 		activeGame = false;
 		hasComputer = false;
-		/*computer = new JButton("Computer");// creating instance of JButton
-		computer.setBounds(270, 485, 100, 30);// x axis, y axis, width, height
-		computer.addActionListener(this);
-		frame.add(computer);// adding button in JFrame*/
+		
+		label = new JLabel("New Game");
+		// Set the position of the text, relative to the icon:
+		label.setBounds(30, 485, 250, 30);
+		label.setVerticalTextPosition(JLabel.BOTTOM);
+		label.setHorizontalTextPosition(JLabel.CENTER);
+		frame.add(label);
+		/*
+		 * computer = new JButton("Computer");// creating instance of JButton
+		 * computer.setBounds(270, 485, 100, 30);// x axis, y axis, width,
+		 * height computer.addActionListener(this); frame.add(computer);//
+		 * adding button in JFrame
+		 */
 
 		frame.setSize(530, 540);// 400 width and 500 height
 		frame.setLayout(null);// using no layout managers
 		frame.setVisible(true);// making the frame visible
-		
+
 		manager = new Manager();
 	}
 
@@ -80,27 +91,22 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		JButton but = (JButton) e.getSource();
 		click(but);
 	}
-	
+
 	public void click(JButton but) {
 		if (but == restart) {
 			initialize();
 			return;
-		} /*else if (but == computer) {
-			if (!activeGame) {
-				hasComputer = !hasComputer;
-				if (hasComputer)
-					computer.setText("Human");
-				else
-					computer.setText("Computer");
-			}
-			return;
-		}*/
-		
+		} /*
+		 * else if (but == computer) { if (!activeGame) { hasComputer =
+		 * !hasComputer; if (hasComputer) computer.setText("Human"); else
+		 * computer.setText("Computer"); } return; }
+		 */
+
 		activeGame = true;
-		
-		int i = Integer.parseInt(but.getText())%9;
-		int j = Integer.parseInt(but.getText())/9;
-		
+
+		int i = Integer.parseInt(but.getText()) % 9;
+		int j = Integer.parseInt(but.getText()) / 9;
+
 		boolean clicked = false;
 		int player = manager.activePlayer();
 		if (manager.activeBoard() == -1) {
@@ -122,23 +128,24 @@ public class GuiTicTac implements ItemListener, ActionListener {
 					buttonArrArr[j][j2].setIcon(icon);
 				}
 				if (manager.winner() != 0) {
-					restart.setText("P" + manager.winner() + " won!");
+					String res;
+					if (manager.winner() == 1 ){
+						res = "Android won!";
+					}else {
+						res = "Apple won!";
+					}
+					label.setText("Game Over"+ "  "+res);
 				}
 			}
 		}
 		/*
-		if (hasComputer && player == 2) {
-			i = Computer.play(manager.getCopyOfActiveBoard());
-			if (manager.activeBoard() != -1)
-				click(buttonArrArr[i][j]);
-			else {
-				manager.click(i);
-				j = i;
-				i = Computer.play(manager.getCopyOfActiveBoard());
-				click(buttonArrArr[i][j]);
-			}
-		}
-		*/
+		 * if (hasComputer && player == 2) { i =
+		 * Computer.play(manager.getCopyOfActiveBoard()); if
+		 * (manager.activeBoard() != -1) click(buttonArrArr[i][j]); else {
+		 * manager.click(i); j = i; i =
+		 * Computer.play(manager.getCopyOfActiveBoard());
+		 * click(buttonArrArr[i][j]); } }
+		 */
 	}
 
 	@Override
