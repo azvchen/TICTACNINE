@@ -62,10 +62,10 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		
 		activeGame = false;
 		hasComputer = false;
-		/*computer = new JButton("Computer");// creating instance of JButton
+		computer = new JButton("Computer");// creating instance of JButton
 		computer.setBounds(270, 485, 100, 30);// x axis, y axis, width, height
 		computer.addActionListener(this);
-		frame.add(computer);// adding button in JFrame*/
+		frame.add(computer);// adding button in JFrame
 
 		frame.setSize(530, 540);// 400 width and 500 height
 		frame.setLayout(null);// using no layout managers
@@ -85,7 +85,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		if (but == restart) {
 			initialize();
 			return;
-		} /*else if (but == computer) {
+		} else if (but == computer) {
 			if (!activeGame) {
 				hasComputer = !hasComputer;
 				if (hasComputer)
@@ -94,7 +94,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 					computer.setText("Computer");
 			}
 			return;
-		}*/
+		}
 		
 		activeGame = true;
 		
@@ -119,10 +119,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 			if (manager.activeBoard() == -1) {
 				Icon icon = player == 1 ? iconX : iconO;
 				for (int j2 = 0; j2 < 9; j2++) {
-					buttonArrArr[j][j2].setIcon(icon);
-				}
-				if (manager.winner() != 0) {
-					restart.setText("P" + manager.winner() + " won!");
+					butArrArr[j2][j].setIcon(icon);
 				}
 			}
 		}
