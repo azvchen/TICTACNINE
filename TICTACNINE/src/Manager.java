@@ -77,6 +77,9 @@ public class Manager {
 						activeBoard = -1;
 					}
 				}
+				if (mainBoard.full()) {
+					winner = -1;
+				}
 				return true; // the click claimed a square, return true
 			} else {
 				return false; // the click did not do anything, return false

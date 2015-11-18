@@ -1,0 +1,128 @@
+import java.util.HashSet;
+import java.util.Set;
+
+public class Computer {
+	
+	public static void main(String[] args) {
+		System.out.println(complete(3,7));
+	}
+	
+	public static int play(int[] board) {
+		Set<Integer> freeSquares = getFreeSquares(board);
+		System.out.println(freeSquares);
+		return goodPlay(board, freeSquares);
+	}
+	
+	private static Set<Integer> getFreeSquares(int[] board) {
+		Set<Integer> freeSquares = new HashSet<Integer>();
+		for (int i = 0; i < 9; i++)
+			if (board[i] == 0)
+				freeSquares.add(i);
+		return freeSquares;
+	}
+	
+	private static int randomPlay(Set<Integer> freeSquares) {
+		return freeSquares.iterator().next();
+	}
+	
+	private static int goodPlay(int[] board, Set<Integer> freeSquares) {
+		int play = -1;
+		play = randomPlay(freeSquares);
+		
+		int w = win(board, freeSquares);
+		if (w != -1)
+			return w;
+		return play;
+	}
+	
+	private static int win(int[] board, Set<Integer> freeSquares) {
+		for (int a = 0; a < 9 && board[a] == 2; a++) {
+			for (int b = a + 1; b < 9 && board[b] == 2; b++) {
+				int c = complete(a, b);
+				if (c != -1 && freeSquares.contains(c)) {
+					System.out.println("win: " + c);
+					return c;
+				}
+			}
+		}
+		return -1;
+	}
+	
+	private static int block(int[] board, Set<Integer> freeSquares) {
+		for (int a = 0; a < 9 && board[a] == 1; a++) {
+			for (int b = a + 1; b < 9 && board[b] == 1; b++) {
+				int c = complete(a, b);
+				if (c != -1 && freeSquares.contains(c)) {
+					System.out.println("block: " + c);
+					return c;
+				}
+			}
+		}
+		return -1;
+	}
+	
+	private static int complete(int a, int b) {
+		if (a == b)
+			return -1;
+		if (b == 4) {
+			b = a;
+			a = 4;
+		} else if (a != 4 && location(b) == 1) {
+			int t = b;
+			b = a;
+			a = t;
+		}
+		
+		if (a == 4)
+			return opposite(b);
+		// if a is side, b is side as well
+		else {
+			if (location(a) == -1)	// both are side
+				return a == opposite(b) ? 4 : -1;
+			// a must be corner
+			if (location(b) == 1)	// both are corner
+				return (a + b) / 2;
+			else {	// a is corner, b is side
+				switch (a) {
+				case 0:
+					return (b == 1 || b == 3) ? 2 * b : -1;
+				case 2:
+					switch (b) {
+					case 1:
+						return 0;
+					case 5:
+						return 8;
+					default:
+						return -1;
+					}
+				case 6:
+					switch (b) {
+					case 3:
+						return 0;
+					case 7:
+						return 8;
+					default:
+						return -1;
+					}
+				case 8:
+					return (b == 5 || b == 7) ? 2 * b - a : -1;
+				default:
+					return -2;	// should not be reached
+				}
+			}
+		}
+	}
+	
+	private static int location(int a) {
+		if (a == 4)	// center
+			return 0;
+		else if (a % 2 == 0)	// corner
+			return 1;
+		else	// side
+			return -1;
+	}
+	
+	private static int opposite(int a) {
+		return 8 - a;
+	}
+}
