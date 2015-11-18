@@ -70,7 +70,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 		label = new JLabel("New Game");
 		// Set the position of the text, relative to the icon:
-		label.setBounds(20, 485, 250, 30);
+		label.setBounds(30, 485, 250, 30);
 		label.setVerticalTextPosition(JLabel.BOTTOM);
 		label.setHorizontalTextPosition(JLabel.CENTER);
 		frame.add(label);

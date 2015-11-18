@@ -16,7 +16,6 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 	JButton restart;
 	JButton computer;
-	JButton exit;
 	JLabel label;
 
 	boolean hasComputer;
@@ -70,20 +69,15 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 		label = new JLabel("New Game");
 		// Set the position of the text, relative to the icon:
-		label.setBounds(20, 485, 250, 30);
+		label.setBounds(30, 485, 250, 30);
 		label.setVerticalTextPosition(JLabel.BOTTOM);
 		label.setHorizontalTextPosition(JLabel.CENTER);
 		frame.add(label);
 		
 		computer = new JButton("Human");	// creating instance of JButton
-		computer.setBounds(280, 485, 100, 30);	// x axis, y axis, width, height
+		computer.setBounds(270, 485, 100, 30);	// x axis, y axis, width, height
 		computer.addActionListener(this);
 		frame.add(computer);	// adding button in JFrame
-		
-		exit = new JButton("Exit");
-		exit.setBounds(180, 485, 100, 30);
-		exit.addActionListener(this);
-		frame.add(exit);
 
 		frame.setSize(530, 540);// 400 width and 500 height
 		frame.setLayout(null);// using no layout managers
@@ -110,8 +104,6 @@ public class GuiTicTac implements ItemListener, ActionListener {
 					computer.setText("Human");
 			}
 			return;
-		} else if (but == exit) {
-			System.exit(0);
 		}
 		
 		atStart = false;
@@ -157,8 +149,8 @@ public class GuiTicTac implements ItemListener, ActionListener {
 				Icon icon = player == 1 ? iconX : iconO;
 				for (int p = 0; p < 9; p++) {
 					buttonArrArr[j][p].setIcon(icon);
-//					label.setText(manager.showPlayerName(player)
-//							+ " just conquered " + j + "th subboard");
+					label.setText(manager.showPlayerName(player)
+							+ " just conquered " + j + "th subboard");
 				}
 				if (manager.winner() > 0) {
 					activeGame = false;

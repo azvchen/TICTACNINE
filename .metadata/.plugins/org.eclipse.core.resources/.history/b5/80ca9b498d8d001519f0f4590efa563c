@@ -40,8 +40,8 @@ public class Computer {
 		play = blockFork(board, freeSquares, 2);
 		if (play != -1)
 			return play;
-		return other(board, freeSquares, 2);
-		//return randomPlay(freeSquares);
+		//return other(board, freeSquares, 2);
+		return randomPlay(freeSquares);
 	}
 	
 	private static int win(int[] board, Set<Integer> freeSquares, int player) {
@@ -105,7 +105,7 @@ public class Computer {
 		for (int a = 0; a < 9; a += 2) {	// play in opposite corner
 			if (a == 4)
 				continue;
-			if (board[a] == player % 2 + 1 && freeSquares.contains(opposite(a)))
+			if (freeSquares.contains(a) && board[a] == player % 2 + 1)
 				return opposite(a);
 		}
 		for (int a = 0; a < 9; a += 2) {	// play in empty corner

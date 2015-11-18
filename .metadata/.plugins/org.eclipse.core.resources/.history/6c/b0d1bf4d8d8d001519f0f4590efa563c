@@ -40,8 +40,8 @@ public class Computer {
 		play = blockFork(board, freeSquares, 2);
 		if (play != -1)
 			return play;
-		return other(board, freeSquares, 2);
-		//return randomPlay(freeSquares);
+		//return other(board, freeSquares, 2);
+		return randomPlay(freeSquares);
 	}
 	
 	private static int win(int[] board, Set<Integer> freeSquares, int player) {
