@@ -166,7 +166,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		
 		if (hasComputer && manager.activePlayer() == 2) {
 			int s = Computer.play(manager.getCopyOfActiveBoard());
-			//System.out.println(s);
+			System.out.println(s);
 			if (manager.activeBoard() != -1)
 				click(buttonArrArr[manager.activeBoard()][s]);
 			else {

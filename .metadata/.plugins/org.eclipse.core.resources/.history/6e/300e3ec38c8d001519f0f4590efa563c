@@ -3,11 +3,11 @@ import java.util.Set;
 
 public class Computer {
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		int[] board = {2,1,0,0,2,0,0,0,1};
 		Set<Integer> freeSquares = getFreeSquares(board);
 		
-	}*/
+	}
 	
 	public static int play(int[] board) {
 		Set<Integer> freeSquares = getFreeSquares(board);
@@ -78,7 +78,7 @@ public class Computer {
 				}
 			}
 			if (paths > 1) {
-				//System.out.println("fork: " + a);
+				System.out.println("fork: " + a);
 				return a;
 			}
 		}
@@ -105,7 +105,7 @@ public class Computer {
 		for (int a = 0; a < 9; a += 2) {	// play in opposite corner
 			if (a == 4)
 				continue;
-			if (board[a] == player % 2 + 1 && freeSquares.contains(opposite(a)))
+			if (board[a] == player % 2 + 1)
 				return opposite(a);
 		}
 		for (int a = 0; a < 9; a += 2) {	// play in empty corner
