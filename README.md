@@ -7,7 +7,7 @@ Jiyao Zhou (jz4es)
 Pak-Hin Luu (pl4me)
 
 Instructions:
-Open the file “GuiTicTac.class” using JarLauncher, or another program that can run .class files.
+Unzip TICTACNINE.zip and open the file “GuiTicTac.class” using JarLauncher, or another program that can run .class files.
 All necessary files are in the folder.
 
 Extra Credit:
