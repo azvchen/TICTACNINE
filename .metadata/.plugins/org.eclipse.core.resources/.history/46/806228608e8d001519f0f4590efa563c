@@ -70,18 +70,18 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 		label = new JLabel("New Game");
 		// Set the position of the text, relative to the icon:
-		label.setBounds(20, 485, 250, 30);
+		label.setBounds(30, 485, 250, 30);
 		label.setVerticalTextPosition(JLabel.BOTTOM);
 		label.setHorizontalTextPosition(JLabel.CENTER);
 		frame.add(label);
 		
 		computer = new JButton("Human");	// creating instance of JButton
-		computer.setBounds(280, 485, 100, 30);	// x axis, y axis, width, height
+		computer.setBounds(270, 485, 100, 30);	// x axis, y axis, width, height
 		computer.addActionListener(this);
 		frame.add(computer);	// adding button in JFrame
 		
 		exit = new JButton("Exit");
-		exit.setBounds(180, 485, 100, 30);
+		exit.setBounds(270, 485, 100, 30);
 		exit.addActionListener(this);
 		frame.add(exit);
 
