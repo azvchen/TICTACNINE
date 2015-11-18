@@ -66,7 +66,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		activeGame = true;
 		atStart = true;
 		hasComputer = false;
-		
+
 		label = new JLabel("New Game");
 		// Set the position of the text, relative to the icon:
 		label.setBounds(30, 485, 250, 30);
@@ -108,11 +108,18 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		
 		atStart = false;
 		
-		if (activeGame)
-			click(but);
+		click(but);
 	}
 
 	public void click(JButton but) {
+		
+		if (!activeGame)
+			return;
+		
+		if (manager.winner() == -1) {
+			activeGame = false;
+			label.setText("Game Over" + "  Tied");
+		}
 		
 		int i = Integer.parseInt(but.getText()) % 9;
 		int j = Integer.parseInt(but.getText()) / 9;
@@ -138,25 +145,28 @@ public class GuiTicTac implements ItemListener, ActionListener {
 				label.setText("Apple's turn");
 			}
 			if (manager.activeBoard() == -1) {
+				player = manager.activePlayer();
 				Icon icon = player == 1 ? iconX : iconO;
-				for (int j2 = 0; j2 < 9; j2++) {
-					buttonArrArr[j][j2].setIcon(icon);
+				for (int p = 0; p < 9; p++) {
+					buttonArrArr[j][p].setIcon(icon);
+					label.setText(manager.showPlayerName(player)
+							+ " just conquered " + j + "th subboard");
 				}
-				if (manager.winner() != 0) {
-					String res;
-					if (manager.winner() == 1 ){
-						res = "Android won!";
-					} else {
-						res = "Apple won!";
-					}
-					label.setText("Game Over  "+res);
+				if (manager.winner() > 0) {
 					activeGame = false;
+					label.setText("Game Over" + "  "
+							+ manager.showPlayerName(manager.winner())
+							+ " wins");
+				} else if (manager.winner() == -1) {
+					activeGame = false;
+					label.setText("Game Over" + "  Tied");
 				}
 			}
 		}
 		
-		if (hasComputer && manager.activePlayer() == 2) { 
+		if (hasComputer && manager.activePlayer() == 2) {
 			int s = Computer.play(manager.getCopyOfActiveBoard());
+			System.out.println(s);
 			if (manager.activeBoard() != -1)
 				click(buttonArrArr[manager.activeBoard()][s]);
 			else {
@@ -165,7 +175,7 @@ public class GuiTicTac implements ItemListener, ActionListener {
 				click(buttonArrArr[manager.activeBoard()][s]);
 			}
 		}
-		 
+		
 	}
 
 	@Override

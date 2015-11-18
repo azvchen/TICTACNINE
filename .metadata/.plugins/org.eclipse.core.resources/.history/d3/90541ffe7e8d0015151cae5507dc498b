@@ -1,0 +1,50 @@
+import java.util.HashSet;
+import java.util.Set;
+
+public class Computer {
+	
+	public static int play(int[] board) {
+		Set<Integer> freeSquares = getFreeSquares(board);
+		System.out.println(freeSquares);
+		return goodPlay(board, freeSquares);
+	}
+	
+	private static Set<Integer> getFreeSquares(int[] board) {
+		Set<Integer> freeSquares = new HashSet<Integer>();
+		for (int i = 0; i < 9; i++)
+			if (board[i] == 0)
+				freeSquares.add(i);
+		return freeSquares;
+	}
+	
+	private static int randomPlay(Set<Integer> freeSquares) {
+		return freeSquares.iterator().next();
+	}
+	
+	private static int goodPlay(int[] board, Set<Integer> freeSquares) {
+		
+		return randomPlay(freeSquares);
+	}
+	
+	private static int complete(int a, int b) {
+		if (a == b)
+			return -1;
+		if (b == 4) {
+			b = a;
+			a = 4;
+		}
+		switch (a) {
+		case 4:
+			
+		}
+	}
+	
+	private static int location(int a) {
+		if (a == 4)
+			return 0;
+		else if (a % 2 == 0)
+			return 1;
+		else
+			return -1;
+	}
+}
