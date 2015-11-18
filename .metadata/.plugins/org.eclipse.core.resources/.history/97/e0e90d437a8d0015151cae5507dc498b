@@ -1,0 +1,176 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class GuiTicTac implements ItemListener, ActionListener {
+
+	boolean circle;
+	JButton[][] buttonArrArr = new JButton[9][9];
+
+	JButton restart;
+	JButton computer;
+	JLabel label;
+
+	boolean hasComputer;
+	boolean activeGame;
+	boolean atStart;
+
+	Icon iconX = new ImageIcon("Xsmall.jpg");
+	Icon iconO = new ImageIcon("Osmall.jpg");
+	Icon iconXL = new ImageIcon("Xlarge.jpg");
+	Icon iconOL = new ImageIcon("Olarge.jpg");
+	Icon iconDef = new ImageIcon("White.jpg");
+	// x = Andorid, o = Apple
+	Manager manager;
+
+	public static void main(String[] args) {
+		new GuiTicTac();
+
+	}
+
+	public GuiTicTac() {
+		// we could do other non-GUI work here if needed
+		initialize(); // our method to setup the GUI
+	}
+
+	private void initialize() {
+
+		JFrame frame = new JFrame();// creating instance of JFrame
+		// JCheckBox a = new JCheckBox();//creating instance of JButton
+		for (int j = 0; j < 9; j++) {
+			int c = 10 + (j % 3) * 160;
+			int d = 10 + (j / 3) * 160;
+			for (int i = 0; i < 9; i++) {
+				String s = Integer.toString(i + 9 * j);
+				buttonArrArr[j][i] = new JButton(s, iconDef);
+				int a = c + (i % 3) * 50;
+				int b = d + (i / 3) * 50;
+				buttonArrArr[j][i].setBounds(a, b, 50, 50);
+				buttonArrArr[j][i].addActionListener(this);
+				frame.add(buttonArrArr[j][i]);
+			}
+		}
+
+		restart = new JButton("Restart");// creating instance of JButton
+		restart.setBounds(380, 485, 100, 30);// x axis, y axis, width, height
+		restart.addActionListener(this);
+		frame.add(restart);// adding button in JFrame
+
+		activeGame = true;
+		atStart = true;
+		hasComputer = false;
+		
+		label = new JLabel("New Game");
+		// Set the position of the text, relative to the icon:
+		label.setBounds(30, 485, 250, 30);
+		label.setVerticalTextPosition(JLabel.BOTTOM);
+		label.setHorizontalTextPosition(JLabel.CENTER);
+		frame.add(label);
+		
+		computer = new JButton("Human");	// creating instance of JButton
+		computer.setBounds(270, 485, 100, 30);	// x axis, y axis, width, height
+		computer.addActionListener(this);
+		frame.add(computer);	// adding button in JFrame
+
+		frame.setSize(530, 540);// 400 width and 500 height
+		frame.setLayout(null);// using no layout managers
+		frame.setVisible(true);// making the frame visible
+
+		manager = new Manager();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		JButton but = (JButton) e.getSource();
+		
+		if (but == restart) {
+			initialize();
+			return;
+		}
+		else if (but == computer) {
+			if (atStart) {
+				hasComputer = !hasComputer;
+				if (hasComputer)
+					computer.setText("Computer");
+				else
+					computer.setText("Human");
+			}
+			return;
+		}
+		
+		atStart = false;
+		
+		if (activeGame)
+			click(but);
+	}
+
+	public void click(JButton but) {
+		
+		int i = Integer.parseInt(but.getText()) % 9;
+		int j = Integer.parseInt(but.getText()) / 9;
+
+		boolean clicked = false;
+		int player = manager.activePlayer();
+		if (manager.activeBoard() == -1) {
+			if (manager.click(j))
+				clicked = manager.click(i);
+		} else {
+			clicked = manager.activeBoard() == j && manager.click(i);
+		}
+
+		if (clicked) {
+			if (player == 1) {
+				but.setIcon(iconX);
+			} else {
+				but.setIcon(iconO);
+			}
+			if (manager.activePlayer() == 1) {
+				label.setText("Android's turn");
+			} else {
+				label.setText("Apple's turn");
+			}
+			if (manager.activeBoard() == -1) {
+				Icon icon = player == 1 ? iconX : iconO;
+				for (int j2 = 0; j2 < 9; j2++) {
+					buttonArrArr[j][j2].setIcon(icon);
+				}
+				if (manager.winner() != 0) {
+					String res;
+					if (manager.winner() == 1 ){
+						res = "Android won!";
+					} else {
+						res = "Apple won!";
+					}
+					label.setText("Game Over  "+res);
+					activeGame = false;
+				}
+			}
+		}
+		
+//		if (hasComputer && player == 2) { 
+//			i = Computer.play(manager.getCopyOfActiveBoard());
+//			if (manager.activeBoard() != -1)
+//				click(buttonArrArr[i][j]);
+//			else {
+//				manager.click(i); j = i;
+//				i = Computer.play(manager.getCopyOfActiveBoard());
+//				click(buttonArrArr[i][j]);
+//			}
+//		}
+		 
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+}
