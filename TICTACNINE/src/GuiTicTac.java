@@ -16,10 +16,12 @@ public class GuiTicTac implements ItemListener, ActionListener {
 
 	JButton restart;
 	JButton computer;
+	JButton exit;
 	JLabel label;
 
 	boolean hasComputer;
 	boolean activeGame;
+	boolean atStart;
 
 	Icon iconX = new ImageIcon("Xsmall.jpg");
 	Icon iconO = new ImageIcon("Osmall.jpg");
@@ -62,21 +64,26 @@ public class GuiTicTac implements ItemListener, ActionListener {
 		restart.addActionListener(this);
 		frame.add(restart);// adding button in JFrame
 
-		activeGame = false;
+		activeGame = true;
+		atStart = true;
 		hasComputer = false;
 
-		label = new JLabel("New Game");
+		label = new JLabel("New Game with human");
 		// Set the position of the text, relative to the icon:
-		label.setBounds(30, 485, 250, 30);
+		label.setBounds(20, 485, 250, 30);
 		label.setVerticalTextPosition(JLabel.BOTTOM);
 		label.setHorizontalTextPosition(JLabel.CENTER);
 		frame.add(label);
-		/*
-		 * computer = new JButton("Computer");// creating instance of JButton
-		 * computer.setBounds(270, 485, 100, 30);// x axis, y axis, width,
-		 * height computer.addActionListener(this); frame.add(computer);//
-		 * adding button in JFrame
-		 */
+
+		computer = new JButton("Human"); // creating instance of JButton
+		computer.setBounds(280, 485, 100, 30); // x axis, y axis, width, height
+		computer.addActionListener(this);
+		frame.add(computer); // adding button in JFrame
+
+		exit = new JButton("Exit");
+		exit.setBounds(180, 485, 100, 30);
+		exit.addActionListener(this);
+		frame.add(exit);
 
 		frame.setSize(530, 540);// 400 width and 500 height
 		frame.setLayout(null);// using no layout managers
@@ -89,20 +96,38 @@ public class GuiTicTac implements ItemListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		JButton but = (JButton) e.getSource();
+
+		if (but == restart) {
+			initialize();
+			return;
+		} else if (but == computer) {
+			if (atStart) {
+				hasComputer = !hasComputer;
+				if (hasComputer)
+					computer.setText("Computer");
+				label.setText("New Game with human");
+			} else
+				computer.setText("Human");
+			    label.setText("New Game with computer");
+			return;
+		} else if (but == exit) {
+			System.exit(0);
+		}
+
+		atStart = false;
+
 		click(but);
 	}
 
 	public void click(JButton but) {
-		if (but == restart) {
-			initialize();
-			return;
-		} /*
-		 * else if (but == computer) { if (!activeGame) { hasComputer =
-		 * !hasComputer; if (hasComputer) computer.setText("Human"); else
-		 * computer.setText("Computer"); } return; }
-		 */
 
-		activeGame = true;
+		if (!activeGame)
+			return;
+
+		if (manager.winner() == -1) {
+			activeGame = false;
+			label.setText("Game Over" + "  Tied");
+		}
 
 		int i = Integer.parseInt(but.getText()) % 9;
 		int j = Integer.parseInt(but.getText()) / 9;
@@ -122,28 +147,43 @@ public class GuiTicTac implements ItemListener, ActionListener {
 			} else {
 				but.setIcon(iconO);
 			}
+			if (manager.activePlayer() == 1) {
+				label.setText("Android's turn");
+			} else {
+				label.setText("Apple's turn");
+			}
 			if (manager.activeBoard() == -1) {
+				player = manager.activePlayer();
 				Icon icon = player == 1 ? iconX : iconO;
 				for (int p = 0; p < 9; p++) {
 					buttonArrArr[j][p].setIcon(icon);
-					label.setText(manager.showPlayerName(player)
-							+ " just conquered " + j + "th subboard");
+					// label.setText(manager.showPlayerName(player)
+					// + " just conquered " + j + "th subboard");
 				}
-				if (manager.winner() != 0) {
+				if (manager.winner() > 0) {
+					activeGame = false;
 					label.setText("Game Over" + "  "
 							+ manager.showPlayerName(manager.winner())
 							+ " wins");
+				} else if (manager.winner() == -1) {
+					activeGame = false;
+					label.setText("Game Over" + "  Tied");
 				}
 			}
 		}
-		/*
-		 * if (hasComputer && player == 2) { i =
-		 * Computer.play(manager.getCopyOfActiveBoard()); if
-		 * (manager.activeBoard() != -1) click(buttonArrArr[i][j]); else {
-		 * manager.click(i); j = i; i =
-		 * Computer.play(manager.getCopyOfActiveBoard());
-		 * click(buttonArrArr[i][j]); } }
-		 */
+
+		if (hasComputer && manager.activePlayer() == 2) {
+			int s = Computer.play(manager.getCopyOfActiveBoard());
+			// System.out.println(s);
+			if (manager.activeBoard() != -1)
+				click(buttonArrArr[manager.activeBoard()][s]);
+			else {
+				manager.click(s);
+				s = Computer.play(manager.getCopyOfActiveBoard());
+				click(buttonArrArr[manager.activeBoard()][s]);
+			}
+		}
+
 	}
 
 	@Override
